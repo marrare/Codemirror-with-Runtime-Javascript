@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="pt">
+    <head>
+        <meta charset="utf-8">
+        <script src="codemirror/lib/codemirror.js"></script>
+        <link rel="stylesheet" href="codemirror/lib/codemirror.css">
+        <link rel="stylesheet" href="codemirror/theme/neat.css">
+        <script src="codemirror/mode/javascript/javascript.js"></script>
+        <script src="codemirror/mode/css/css.js"></script>
+        
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+        
+        <style>
+            body {
+                background-color: #eee;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="codeeditor"></div>
+        <div id="resultadoCode"></div>
+        
+        <button id="botaoExecutar">Run</button>
+        <script>
+            var editor = CodeMirror(document.getElementById("codeeditor"), {
+                value: "",
+                mode: "javascript",
+                theme: "neat",
+                tabSize: "5",
+                lineNumbers: true
+            });
+            
+            $("#botaoExecutar").click(function() {
+                $("#resultadoCode").html("");
+                
+                var valor = editor.getValue();
+                if(valor.indexOf("document.write(") >= 0) {
+                    valor = valor.replace(/document.write/g,"alert");
+                }
+                
+                eval(valor);
+            });
+        </script>
+    </body>
+</html>
